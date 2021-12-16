@@ -37,10 +37,24 @@ const getSlabsByCourseId = async (req, res) => {
                     ' and a.slabId = s.id and a.slabId = ' +
                     slab.id
                 )
+
+            const content =  await database.query(
+                'select a.* from slabs s, content a where s.courseId = ' + 
+                req.params.id + 
+                ' and a.slabId = s.id and a.slabId = ' + slab.id
+            )    
+
+            const video = await database.query(
+                'select a.* from slabs s, videos a where s.courseId = ' + req.params.id + 
+                ' and a.slabId = s.id and a.slabId = ' + slab.id
+            )
+
             arraySlabs.push({
                 slab: slab,
+                content: content,
+                video: video,
                 activities: activities,
-                autoevaluation: autoevaluation
+                autoevaluation: autoevaluation,
             })
         }
 
@@ -63,7 +77,7 @@ const getSlabById = async (req, res) => {
         const rows = await database.query('select * from slabs where id = ' + req.params.id)
         return res.json({
             code: 1,
-            msg: 'succesful',
+            msg: 'successful',
             data: rows
         })
     } catch (err) {

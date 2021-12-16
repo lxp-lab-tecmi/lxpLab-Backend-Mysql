@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const slabController = require('../../Controllers/slabController')
+const slabController = require('../../Controllers/slabController');
 
 router.get('/slabs/', slabController.getSlabs)
 
